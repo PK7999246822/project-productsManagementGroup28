@@ -132,7 +132,7 @@ const updateCart = async function(req, res) {
         if (!product) { return res.status(404).send({ status: false, msg: "product not exist or deleted" }) }
 
         if (!validator.isValid(removeProduct)) { return res.status(400).send({ status: false, msg: "removeProduct should be present in body" }) }
-        if (!(removeProduct == "all" || removeProduct == 1)) { return res.status(400).send({ status: false, msg: "removeProduct value should be either 'all' or 1" }) }
+        if (!(removeProduct == 0 || removeProduct == 1)) { return res.status(400).send({ status: false, msg: "removeProduct value should be either 0 or 1" }) }
 
         const findCart = await cartModel.findOne({ userId: userId, _id: cartId })
         if (!findCart) { return res.status(400).send({ status: false, msg: "No cart found,please create cart a first" }) }
@@ -158,7 +158,7 @@ const updateCart = async function(req, res) {
                 }
             }
         }
-        if (removeProduct == "all") {
+        if (removeProduct == 0) {
             for (let i = 0; i < findCart.items.length; i++) {
                 if (productId == findCart.items[i].productId) {
                     let totalPrice = findCart.totalPrice - (product.price * findCart.items[i].quantity)
