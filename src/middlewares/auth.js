@@ -7,7 +7,7 @@ const middleware = async function (req, res, next) {
             return res.status(403).send({ status: false, message: 'Missing authentication token in request' })
         }
         let splitToken = token.split(' ')
-
+        console.log(splitToken)
         let decodeToken = jwt.decode(splitToken[1], 'Products-Management')
         if (Date.now() > (decodeToken.exp) * 1000) {
             return res.status(403).send({ status: false, message: 'Session Expired, please login again' })
